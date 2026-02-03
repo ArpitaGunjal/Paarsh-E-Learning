@@ -22,9 +22,13 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors({
-  origin: "https://paarshstudentdashboard.vercel.app",
+  origin: [
+    "https://paarshstudentdashboard.vercel.app",
+    "https://paarsh-e-learning.onrender.com"
+  ],
   credentials: true
 }));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
