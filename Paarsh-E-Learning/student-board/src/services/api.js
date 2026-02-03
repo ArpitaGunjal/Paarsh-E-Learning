@@ -1,5 +1,5 @@
 // src/services/api.js
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 // Course API functions
 export const getCourses = async (filters = {}) => {
@@ -70,7 +70,8 @@ export const batchEnrollCourses = async (courseIds) => {
     console.log('📦 Batch enrolling courses:', courseIds);
     console.log('🔑 Using token:', token.substring(0, 20) + '...');
     
-    const response = await fetch('http://localhost:5000/api/courses/enroll/batch', {
+    const response = await fetch(`${API_BASE_URL}/courses/enroll/batch`, {
+
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -114,7 +115,8 @@ export const getMyCourses = async () => {
     console.log('📚 Fetching enrolled courses...');
     console.log('🔑 Token:', token.substring(0, 20) + '...');
     
-    const response = await fetch('http://localhost:5000/api/courses/enrolled/my-courses', {
+    const response = await fetch(`${API_BASE_URL}/courses/enrolled/my-courses`, {
+
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -144,7 +146,8 @@ export const debugEnrollments = async () => {
       throw new Error('Please login');
     }
     
-    const response = await fetch('http://localhost:5000/api/courses/debug/enrollments', {
+    const response = await fetch(`${API_BASE_URL}/courses/debug/enrollments`, {
+
       headers: {
         'Authorization': `Bearer ${token}`
       }
