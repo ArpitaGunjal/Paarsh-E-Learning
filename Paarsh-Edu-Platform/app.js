@@ -11,6 +11,8 @@ import Lecture from "./models/lecture.js";
 import Assignment from "./models/Assignment.js";
 import Test from "./models/Test.js";
 import fs from "fs"; // Add this import
+import cors from "cors";
+
 
 
 dotenv.config();
@@ -19,6 +21,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+app.use(cors({
+  origin: "https://paarshstudentdashboard.vercel.app",
+  credentials: true
+}));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 /* ================= DB ================= */
 mongoose
@@ -393,39 +402,18 @@ app.delete('/admin/blogs/:id', async (req, res) => {
 });
 
 app.get('/student-dashboard', (req, res) => {
-    // Check if React app is running (development mode)
-    const isDevelopment = process.env.NODE_ENV !== 'production';
-    
-    if (isDevelopment) {
-        // In development, redirect to React dev server (usually on port 3001)
-        res.redirect('http://localhost:3001');
-    } else {
-        // In production, you would serve the built React app
-        const reactBuildPath = path.join(__dirname, '../student-board/build');
-        if (fs.existsSync(path.join(reactBuildPath, 'index.html'))) {
-            res.sendFile(path.join(reactBuildPath, 'index.html'));
-        } else {
-            res.send(`
-                <html>
-                    <head><title>Redirecting to Dashboard</title></head>
-                    <body>
-                        <h2>Dashboard Loading...</h2>
-                        <p>If not redirected automatically, click <a href="http://localhost:3001">here</a></p>
-                        <script>
-                            window.location.href = "http://localhost:3001";
-                        </script>
-                    </body>
-                </html>
-            `);
-        }
-    }
+  return res.redirect('https://paarshstudentdashboard.vercel.app');
 });
 
 
 
-/* ================= START SERVER ================= */
 
-app.listen(3000, () => {
+/* ================= START SERVER ================= */
+const PORT = process.env.PORT || 3000;
+
+
+
+app.listen(PORT, () => {
   console.log("🚀 Main Website running at http://localhost:3000");
   console.log("🎓 React Dashboard at http://localhost:3001");
   console.log("📝 Blogs available at http://localhost:3000/blogs");
