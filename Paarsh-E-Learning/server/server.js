@@ -11,7 +11,7 @@ console.log('🔧 Starting Server...');
 
 // Middleware - Allow both ports
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'https://paarsh-e-learning-chi.vercel.app'],
   credentials: true
 }));
 app.use(express.json());
