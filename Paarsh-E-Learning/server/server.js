@@ -11,9 +11,19 @@ console.log('🔧 Starting Server...');
 
 // Middleware - Allow both ports
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001', 'https://paarsh-e-learning-chi.vercel.app', 'https://paarsh-e-learning-gg9zdfnjo-arpitagunjal05-gmailcoms-projects.vercel.app'],
-  credentials: true
+  origin: [
+    "https://paarsh-e-learning-chi.vercel.app",
+    "https://paarsh-e-learning-gg9zdfnjo-arpitagunjal05-gmailcoms-projects.vercel.app",
+    "http://localhost:3000",
+    "http://localhost:3001"
+  ],
+  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+  allowedHeaders: ["Content-Type","Authorization"],
+  credentials: false
 }));
+
+app.options("*", cors());
+
 app.use(express.json());
 
 // Import routes
